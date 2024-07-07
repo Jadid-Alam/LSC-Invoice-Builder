@@ -210,6 +210,16 @@ public class MainController {
 
     @FXML
     private void handleGenerateInvoice() {
+
+        if (customerComboBox.getValue() == null || startDatePicker.getValue() == null || endDatePicker.getValue() == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please enter all required information");
+            alert.showAndWait();
+            return;
+        }
+
+
         String customer = customerComboBox.getValue();
         if (storage.findID(customer) != -1)
         {
@@ -223,6 +233,14 @@ public class MainController {
             for (int i = 0; i < storage.getNoOfChildren(); i++) {
                 TextField weeklyFee = (TextField) paymentInformation.lookup("#weeklyFee" + i);
                 TextField hoursPerWeek = (TextField) paymentInformation.lookup("#hoursPerWeek" + i);
+
+                if (weeklyFee.getText().isEmpty()){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Dialog");
+                    alert.setContentText("Please enter all required information");
+                    alert.showAndWait();
+                    return;
+                }
 
                 if (weeklyFee.getText() != null) {
                     storage.setStudentFPW(Double.parseDouble(weeklyFee.getText()), i);

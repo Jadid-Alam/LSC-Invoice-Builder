@@ -53,14 +53,11 @@ public class SecondController {
 
     @FXML
     public void initialize() {
-        SpinnerValueFactory<Integer> valueFactory =
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 4, 1);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4, 1);
         noOfStudentsSpinner.setValueFactory(valueFactory);
-    }
-
-    @FXML
-    public void handleAddStudent() {
-        refreshStudentInputs();
+        noOfStudentsSpinner.valueProperty().addListener((obs, oldValue, newValue) -> {
+            refreshStudentInputs();
+        });
     }
 
     @FXML
@@ -89,6 +86,17 @@ public class SecondController {
     @FXML
     public void handleAddCustomer() {
 
+        if (registryComboBox.getValue() == null || titleTextField.getText().isEmpty() ||
+                firstNameTextField.getText().isEmpty() || lastNameTextField.getText().isEmpty() || address1TextField.getText().isEmpty() ||
+                postcodeTextField.getText().isEmpty() || address1TextField.getText().isEmpty() || address2TextField.getText().isEmpty() ||
+                address3TextField.getText().isEmpty() || postcodeTextField.getText().isEmpty() || noOfStudentsSpinner.getValue() == 0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error Dialog");
+            alert.setContentText("Please enter all required information");
+            alert.showAndWait();
+            return;
+        }
+
         storage.setRegistry(registryComboBox.getValue().toString());
         storage.setTitle(titleTextField.getText());
         storage.setFName(firstNameTextField.getText());
@@ -104,6 +112,13 @@ public class SecondController {
         for (int i = 0; i < noOfStudentsSpinner.getValue(); i++) {
             TextField studentName = (TextField) studentDetailsContainer.lookup("#studentName" + i);
             DatePicker studentDOB = (DatePicker) studentDetailsContainer.lookup("#studentDOB" + i);
+            if (studentName.getText().isEmpty() || studentDOB.getValue() == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Dialog");
+                alert.setContentText("Please enter all required information");
+                alert.showAndWait();
+                return;
+            }
             storage.setStudentName(studentName.getText(), i );
             storage.setStudentDOB(studentDOB.getValue().toString(), i );
         }

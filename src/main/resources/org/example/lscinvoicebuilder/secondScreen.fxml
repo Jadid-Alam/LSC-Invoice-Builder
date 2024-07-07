@@ -37,10 +37,10 @@
     <Label fx:id="address1" text="First Line fo Address:"/>
     <TextField fx:id="address1TextField" promptText="Please enter the First Line of Address (Required)"/>
 
-    <Label fx:id="address2" text="Second Line of Address:"/>
+    <Label fx:id="address2" text="Town:"/>
     <TextField fx:id="address2TextField" promptText="Please enter the Town (Optional)"/>
 
-    <Label fx:id="address3" text="City:"/>
+    <Label fx:id="address3" text="County:"/>
     <TextField fx:id="address3TextField" promptText="Please enter the County (Required)"/>
 
     <Label fx:id="postcode" text="Postcode:"/>
@@ -48,7 +48,6 @@
 
     <Label fx:id="noOfStudentsLabel" text="Number of Students (MAX: 4)"/>
     <Spinner fx:id="noOfStudentsSpinner"/>
-    <Button text="Add Student" onAction="#handleAddStudent"/>
 
     <Label fx:id="studentDetails" text="Student Details"/>
     <VBox fx:id="studentDetailsContainer" spacing="5" alignment="CENTER"/>

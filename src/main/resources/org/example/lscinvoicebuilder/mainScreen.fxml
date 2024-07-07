@@ -11,23 +11,30 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
 <?import org.controlsfx.control.ListActionView?>
-<VBox alignment="CENTER" spacing="1.0" xmlns:fx="http://javafx.com/fxml">
+<?import javafx.scene.control.Spinner?>
+
+<?import javafx.scene.control.ScrollPane?>
+<ScrollPane xmlns:fx="http://javafx.com/fxml" fitToWidth="true" fitToHeight="true">
+  <content>
+    <VBox alignment="CENTER" spacing="1.0" >
 
 
-  <Label fx:id="customerLabel" text="Customer:"/>
-  <ComboBox fx:id="customerComboBox"/>
-  <Button text="Add a New Customer" onAction="#handleAddCustomer"/>
+      <Label fx:id="customerLabel" text="Customer:"/>
+      <ComboBox fx:id="customerComboBox"/>
+      <Button text="Add a New Customer" onAction="#handleAddCustomer"/>
 
-  <DatePicker fx:id="startDatePicker" promptText="Select a Start Date"/>
-  <Label fx:id="startDateValidation"/>
-  <DatePicker fx:id="endDatePicker" promptText="Select an End Date"/>
-  <Label fx:id="endDateValidation"/>
+      <DatePicker fx:id="startDatePicker" promptText="Select a Start Date"/>
+      <Label fx:id="startDateValidation"/>
+      <DatePicker fx:id="endDatePicker" promptText="Select an End Date"/>
+      <Label fx:id="endDateValidation"/>
 
-  <VBox fx:id="paymentInformation" spacing="5" alignment="CENTER"/>
+      <VBox fx:id="paymentInformation" spacing="5" alignment="CENTER"/>
 
-  <Label fx:id="fileOutputLabel" text="Save Invoice to: "/>
-  <Button text="Browse" onAction="#handleBrowse"/>
+      <Label fx:id="fileOutputLabel" text="Save Invoice to: "/>
+      <Button text="Browse" onAction="#handleBrowse"/>
 
-  <Button text="Generate Invoice" onAction="#handleGenerateInvoice"/>
+      <Button text="Generate Invoice" onAction="#handleGenerateInvoice"/>
 
-</VBox>
+    </VBox>
+  </content>
+</ScrollPane>
