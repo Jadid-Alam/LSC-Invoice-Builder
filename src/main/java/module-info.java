@@ -9,6 +9,7 @@ module org.example.lscinvoicebuilder {
     requires eu.hansolo.tilesfx;
     requires itextpdf;
     requires java.sql;
+    requires java.desktop;
 
     opens org.example.lscinvoicebuilder to javafx.fxml;
     exports org.example.lscinvoicebuilder;

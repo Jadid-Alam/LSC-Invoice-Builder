@@ -12,11 +12,13 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.Objects;
+import java.awt.Desktop;
 
 public class MainController {
 
@@ -33,6 +35,7 @@ public class MainController {
     private Scene scene2;
     public Scene getScene2() {return scene2;}
     public void setScene2(Scene scene2) {this.scene2 = scene2;}
+    private String fileLocation;
 
     @FXML
     private ComboBox<String> customerComboBox;
@@ -103,8 +106,9 @@ public class MainController {
 
         directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Select Output Folder");
-        directoryChooser.setInitialDirectory(new File(determineDownloadsPath()));
-        fileOutputLabel.setText("Save Invoice to: " + determineDownloadsPath());
+        fileLocation = determineDownloadsPath();
+        directoryChooser.setInitialDirectory(new File(fileLocation));
+        fileOutputLabel.setText("Save Invoice to: " + fileLocation);
     }
 
 
@@ -167,6 +171,7 @@ public class MainController {
             fileOutputLabel.setText("Save Invoice to: " + selectedDirectory.getAbsolutePath());
             storage.setPdfLocation(selectedDirectory.getAbsolutePath());
         } else {
+            storage.setPdfLocation(determineDownloadsPath());
             fileOutputLabel.setText("Save Invoice to: " + determineDownloadsPath());
         }
     }
@@ -235,6 +240,25 @@ public class MainController {
             pdfBuilder.createPdf();
 
             System.out.println(storage.getRegistry());
+
+            File folder = new File(fileLocation);
+            if (folder.exists() && folder.isDirectory()) {
+                if (Desktop.isDesktopSupported()) {
+                    Desktop desktop = Desktop.getDesktop();
+                    try {
+                        desktop.open(folder);
+                        System.out.println("Folder opened: " + fileLocation);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.out.println("Failed to open folder: " + fileLocation);
+                    }
+                } else {
+                    System.out.println("Desktop API is not supported on this platform.");
+                }
+            } else {
+                System.out.println("The specified folder does not exist or is not a directory.");
+            }
+
         }
         else
         {
@@ -243,6 +267,8 @@ public class MainController {
             alert.setHeaderText("Customer not found");
             alert.setContentText("Please select a customer from the dropdown list (or add a new one if the dropdown is empty)");
             alert.showAndWait();
+
+
         }
     }
 
