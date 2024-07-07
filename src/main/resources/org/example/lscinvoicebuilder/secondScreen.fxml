@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<VBox alignment="CENTER" spacing="1.0" xmlns:fx="http://javafx.com/fxml">
+
+    <Button text="Back" onAction="#handleBack"/>
+
+    <Label fx:id="registryLabel" text="Registry:"/>
+    <ComboBox fx:id="registryComboBox" promptText="Please Chose a Registry (Required)">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="EY557846"/>
+                <String fx:value="EY2649415"/>
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+
+    <Label fx:id="parentDetails" text="Parent Details"/>
+    <Label fx:id="title" text="Tile:"/>
+    <TextField fx:id="titleTextField" promptText="Please enter a Tile (Required)"/>
+
+    <Label fx:id="firstName" text="First Name:"/>
+    <TextField fx:id="firstNameTextField" promptText="Please enter a First Name (Required)"/>
+
+    <Label fx:id="lastName" text="Last Name:"/>
+    <TextField fx:id="lastNameTextField" promptText="Please enter a Last Name (Required)"/>
+
+    <Label fx:id="address1" text="First Line fo Address:"/>
+    <TextField fx:id="address1TextField" promptText="Please enter the First Line of Address (Required)"/>
+
+    <Label fx:id="address2" text="Second Line of Address:"/>
+    <TextField fx:id="address2TextField" promptText="Please enter the Town (Optional)"/>
+
+    <Label fx:id="address3" text="City:"/>
+    <TextField fx:id="address3TextField" promptText="Please enter the County (Required)"/>
+
+    <Label fx:id="postcode" text="Postcode:"/>
+    <TextField fx:id="postcodeTextField" promptText="Please enter the Postcode (Required)"/>
+
+    <Label fx:id="noOfStudentsLabel" text="Number of Students (MAX: 4)"/>
+    <Spinner fx:id="noOfStudentsSpinner"/>
+    <Button text="Add Student" onAction="#handleAddStudent"/>
+
+    <Label fx:id="studentDetails" text="Student Details"/>
+    <VBox fx:id="studentDetailsContainer" spacing="5" alignment="CENTER"/>
+
+    <Button text="AddCustomer" onAction="#handleAddCustomer"/>
+
+</VBox>
