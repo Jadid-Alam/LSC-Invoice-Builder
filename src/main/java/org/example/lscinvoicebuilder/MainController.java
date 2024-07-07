@@ -87,12 +87,17 @@ public class MainController {
         });
 
         customerComboBox.valueProperty().addListener((obserable, oldValue, newValue) -> {
+            System.out.println("Customer changed1");
             String customer = customerComboBox.getValue();
-            if (storage.findID(customer) != -1) {
-                storage.setId(storage.findID(customer));
-                storage.load(storage.findID(customer));
+            System.out.println(customer);
+            int id = storage.findID(customer);
+            if (id != -1) {
+                storage.setId(id);
+                storage.load(id);
                 refreshPaymentInformation();
+                System.out.println("Customer changed2");
             }
+
         });
 
 
@@ -102,7 +107,21 @@ public class MainController {
         fileOutputLabel.setText("Save Invoice to: " + determineDownloadsPath());
     }
 
-    @FXML
+
+    public void refreshDropdown() {
+        customerComboBox.getItems().clear();
+        try {
+            this.storage.refreshDropdownOptions();
+            for (String option : storage.getDropdownOptions()) {
+                customerComboBox.getItems().add(option);
+            }
+
+        } catch (NullPointerException e) {
+            System.out.println("No customers found");
+        }
+    }
+
+
     public void refreshPaymentInformation() {
         paymentInformation.getChildren().clear();
         for (int i = 0; i < storage.getNoOfChildren(); i++) {
@@ -138,18 +157,6 @@ public class MainController {
         }
     }
 
-    public void refreshDropdown() {
-        try {
-            this.storage.refreshDropdownOptions();
-            for (String option : storage.getDropdownOptions()) {
-                customerComboBox.getItems().add(option);
-            }
-            customerComboBox.setPromptText("Select a customer");
-        } catch (NullPointerException e) {
-            System.out.println("No customers found");
-        }
-
-    }
 
     @FXML
     private void handleBrowse() {

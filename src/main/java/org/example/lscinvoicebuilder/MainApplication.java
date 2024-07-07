@@ -22,8 +22,8 @@ public class MainApplication extends Application {
         fxmlLoader2.setController(secondController);
 
         try {
-            Scene scene = new Scene(fxmlLoader.load(), 500, 500);
-            Scene scene2 = new Scene(fxmlLoader2.load(), 500, 500);
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 1000);
+            Scene scene2 = new Scene(fxmlLoader2.load(), 1000, 1000);
 
             stage.setTitle("LSC Invoice Builder");
             stage.setScene(scene);

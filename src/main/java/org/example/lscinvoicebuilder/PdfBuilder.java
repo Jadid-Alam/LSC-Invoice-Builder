@@ -137,7 +137,13 @@ public class PdfBuilder {
             }
 
             PdfPCell totalPrice = new PdfPCell(new Phrase("Total Price (4 Weeks)",boldFont));
-            totalPrice.setColspan(4);
+            if (storage.getIsHoursThere())
+            {
+                totalPrice.setColspan(4);
+            }
+            else {
+                totalPrice.setColspan(2);
+            }
             totalPrice.setPadding(tablePadding);
             studentTable.addCell(totalPrice);
 
@@ -145,7 +151,7 @@ public class PdfBuilder {
             for (int row = 0; row < MAX_STUDENTS; row++) {
                 totalP += storage.getStudentFPW(row)*4;
             }
-            PdfPCell totalPriceValue = new PdfPCell(new Phrase(totalP+"",normalFont));
+            PdfPCell totalPriceValue = new PdfPCell(new Phrase("£"+totalP,normalFont));
             totalPriceValue.setPadding(tablePadding);
             studentTable.addCell(totalPriceValue);
 

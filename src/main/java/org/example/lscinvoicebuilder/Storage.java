@@ -8,12 +8,10 @@ package org.example.lscinvoicebuilder;
 
 import java.io.*;
 
-public class Storage implements Serializable {
+public class Storage {
     // data for Storage
-    @Serial
-    private static final long serialVersionUID = 1L;
 
-    private final String FILENAME = "src/main/java/org/example/lscinvoicebuilder/SavedData/Database.ser";
+    private final String FILENAME = "src/main/java/org/example/lscinvoicebuilder/SavedData/Database.csv";
     private final String FILENAME_TOTAL_OBJECTS = "src/main/java/org/example/lscinvoicebuilder/SavedData/NumberOfData.txt";
     private int maxObjects;
     private String[] dropdownOptions;
@@ -35,7 +33,7 @@ public class Storage implements Serializable {
     public void setIsHoursThere(Boolean isHoursThere1) {this.isHoursThere = isHoursThere1;}
 
     // registry data
-    private String registry;
+    private String registry = "";
     public String getRegistry() {return registry;}
     public void setRegistry(String registry1) {this.registry = registry1;}
 
@@ -111,73 +109,63 @@ public class Storage implements Serializable {
             e.printStackTrace();
         }
 
-        this.dropdownOptions = new String[this.maxObjects];
-
-        try (FileReader fr1 = new FileReader(FILENAME_TOTAL_OBJECTS);
-             BufferedReader br1 = new BufferedReader(fr1)) {
-
-            int i = 0;
-            while (br1.readLine() != null) {
-                this.dropdownOptions[i] = br1.readLine();
-                i++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        refreshDropdownOptions();
     }
 
     public void load(int loadId) {
-        try (FileInputStream fileIn = new FileInputStream(FILENAME);
-             ObjectInputStream ois = new ObjectInputStream(fileIn)) {
+        try (FileReader fr2 = new FileReader(FILENAME);
+            BufferedReader br2 = new BufferedReader(fr2)) {
+            for (int i = 0; i < this.maxObjects; i++) {
+                String line = br2.readLine();
 
-            for (int j = 0; j < this.maxObjects; j++)
-            {
-                Storage st = (Storage) ois.readObject();
-
-                if (st.getId() == loadId)
+                if (i == loadId-1)
                 {
-                    this.id = st.getId();
-                    this.registry = st.getRegistry();
-                    this.title = st.getTitle();
-                    this.fName = st.getFName();
-                    this.lName = st.getLName();
-                    this.noOfChildren = st.getNoOfChildren();
-                    this.address1 = st.getAddress1();
-                    this.address2 = st.getAddress2();
-                    this.address3 = st.getAddress3();
-                    this.postcode = st.getPostcode();
-                    this.studentNames = new String[st.getNoOfChildren()];
-                    this.studentDOB = new String[st.getNoOfChildren()];
-                    this.studentFPW = new double[st.getNoOfChildren()];
-                    this.studentHPW = new double[st.getNoOfChildren()];
-                    this.studentPPW = new double[st.getNoOfChildren()];
+                    String[] data = line.split(",");
 
-                    for (int i = 0; i < st.getNoOfChildren(); i++)
-                    {
-                        this.studentNames[i] = st.getStudentName(i);
-                        this.studentDOB[i] = st.getStudentDOB(i);
-
-                    }
+                    this.id = Integer.parseInt(data[0]);
+                    this.registry = data[1];
+                    this.title = data[2];
+                    this.fName = data[3];
+                    this.lName = data[4];
+                    this.address1 = data[5];
+                    this.address2 = data[6];
+                    this.address3 = data[7];
+                    this.postcode = data[8];
+                    this.noOfChildren = Integer.parseInt(data[9]);
+                    this.studentNames = data[10].split(" ");
+                    this.studentDOB = data[11].split(" ");
+                    this.studentHPW = new double[this.noOfChildren];
+                    this.studentPPW = new double[this.noOfChildren];
+                    this.studentFPW = new double[this.noOfChildren];
 
                 }
             }
-
-        } catch (IOException | ClassNotFoundException e) {
+        }
+        catch (IOException | NullPointerException e) {
             e.printStackTrace();
+            System.out.println("No data found");
         }
 
     }
 
     public void store() {
 
-        this.id = this.maxObjects;
-        this.maxObjects++;
+        this.id = this.maxObjects+1;
+        this.maxObjects = this.id;
 
-        try (FileOutputStream fileOut = new FileOutputStream(FILENAME,true);
-             ObjectOutputStream osw = new ObjectOutputStream(fileOut)) {
-            osw.writeObject(this);
+        try (FileWriter fw = new FileWriter(FILENAME,true);
+             BufferedWriter bw = new BufferedWriter(fw)) {
+
+            String studentNamesstr = "";
+            String studentDOBstr = "";
+
+            for (int i = 0; i < this.noOfChildren; i++) {
+                studentNamesstr += this.studentNames[i] + " ";
+                studentDOBstr += this.studentDOB[i] + " ";
+            }
+
+            bw.write(this.id+","+this.registry+","+this.title+","+this.fName+","+this.lName+","+this.address1+","+this.address2+","+this.address3+","
+                    +this.postcode+","+this.noOfChildren+","+studentNamesstr+","+studentDOBstr+"\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,8 +176,6 @@ public class Storage implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        refreshDropdownOptions();
     }
 
     public void refreshDropdownOptions() {
@@ -197,8 +183,12 @@ public class Storage implements Serializable {
 
         try (FileReader fr = new FileReader(FILENAME_TOTAL_OBJECTS);
              BufferedReader br = new BufferedReader(fr)) {
-            for (int i = 0; i < this.maxObjects; i++) {
-                this.dropdownOptions[i] = br.readLine();
+            int count = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                this.dropdownOptions[count] = line;
+                System.out.println(this.dropdownOptions[count]);
+                count++;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -207,11 +197,17 @@ public class Storage implements Serializable {
     }
 
     public int findID(String dropDownOption) {
-        for (int i = 0; i < this.maxObjects; i++) {
-            if (this.dropdownOptions[i].contains(dropDownOption)) {
+
+        for (int i = 1; i <= this.dropdownOptions.length; i++) {
+            System.out.println(i);
+            System.out.println(dropDownOption);
+            System.out.println(this.dropdownOptions[i-1]);
+            System.out.println(this.dropdownOptions[i-1].contains(dropDownOption));
+            if (this.dropdownOptions[i-1].contains(dropDownOption)) {
                 return i;
             }
         }
+
         return -1;
     }
 
