@@ -11,11 +11,13 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 
 public class PdfBuilder {
@@ -109,17 +111,25 @@ public class PdfBuilder {
                 studentTable.addCell(feesPerWeek);
             }
 
-            for (int row = 0; row < MAX_STUDENTS; row++) {
+            for (int row = 0; row < storage.getNoOfChildren(); row++) {
                 PdfPCell nameCell = new PdfPCell(new Phrase(storage.getStudentName(row),normalFont));
                 nameCell.setPadding(tablePadding);
                 studentTable.addCell(nameCell);
 
+                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String dob = storage.getStudentDOB(row);
-                LocalDate dobDate = LocalDate.parse(dob);
-                String dobFormatted = dobDate.format(formatter);
-                PdfPCell dobCell = new PdfPCell(new Phrase(dobFormatted,normalFont));
-                dobCell.setPadding(tablePadding);
-                studentTable.addCell(dobCell);
+
+                try {
+                    Date dobDate = inputFormat.parse(dob);
+                    String dobFormatted = outputFormat.format(dobDate);
+                    PdfPCell dobCell = new PdfPCell(new Phrase(dobFormatted,normalFont));
+                    dobCell.setPadding(tablePadding);
+                    studentTable.addCell(dobCell);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Error in parsing date dob");
+                }
 
                 if (storage.getIsHoursThere()) {
                     PdfPCell hpwCell = new PdfPCell(new Phrase(storage.getStudentHPW(row) + "", normalFont));

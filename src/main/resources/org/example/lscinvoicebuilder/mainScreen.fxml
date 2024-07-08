@@ -14,27 +14,48 @@
 <?import javafx.scene.control.Spinner?>
 
 <?import javafx.scene.control.ScrollPane?>
-<ScrollPane xmlns:fx="http://javafx.com/fxml" fitToWidth="true" fitToHeight="true">
-  <content>
-    <VBox alignment="CENTER" spacing="1.0" >
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 
 
-      <Label fx:id="customerLabel" text="Customer:"/>
-      <ComboBox fx:id="customerComboBox"/>
-      <Button text="Add a New Customer" onAction="#handleAddCustomer"/>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ScrollBar?>
 
-      <DatePicker fx:id="startDatePicker" promptText="Select a Start Date"/>
-      <Label fx:id="startDateValidation"/>
-      <DatePicker fx:id="endDatePicker" promptText="Select an End Date"/>
-      <Label fx:id="endDateValidation"/>
 
-      <VBox fx:id="paymentInformation" spacing="5" alignment="CENTER"/>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@CSS/styleSheet.css" styleClass="vBox">
 
-      <Label fx:id="fileOutputLabel" text="Save Invoice to: "/>
-      <Button text="Browse" onAction="#handleBrowse"/>
+    <HBox styleClass="logoHBox">
+        <ImageView fitHeight="200" fitWidth="200" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@Images/invoice-logo.jpg"/>
+            </image>
+        </ImageView>
+    </HBox>
 
-      <Button text="Generate Invoice" onAction="#handleGenerateInvoice"/>
+  <HBox styleClass="customerHBox">
+      <Label fx:id="customerLabel" text="Customer:" styleClass="customerLabel"/>
+      <ComboBox fx:id="customerComboBox" styleClass="customerComboBox"/>
+      <Button text="Add a New Customer" onAction="#handleAddCustomer" styleClass="customerButton"/>
+  </HBox>
 
-    </VBox>
-  </content>
-</ScrollPane>
+  <HBox styleClass="datePickerHBox">
+      <DatePicker fx:id="startDatePicker" promptText="Select a Start Date" styleClass="startDatePicker" />
+      <Label fx:id="to" text="To" alignment="CENTER" styleClass="dateLabel" />
+      <DatePicker fx:id="endDatePicker" promptText="Select an End Date" styleClass="endDatePicker"/>
+  </HBox>
+
+    <VBox fx:id="paymentInformation" alignment="CENTER"/>
+
+  <HBox styleClass="fileBrowserHBox">
+      <Label fx:id="fileOutputLabel" text="Save Invoice to: " styleClass="fileBrowserLabel"/>
+      <Button fx:id="fileOutputButton" text="Browse" onAction="#handleBrowse" styleClass="fileBrowserButton"/>
+  </HBox>
+
+    <HBox styleClass="generateInvoiceHBox">
+      <Button fx:id="generateInvoice" text="Generate Invoice" onAction="#handleGenerateInvoice" styleClass="generateInvoiceButton"/>
+    </HBox>
+
+
+</VBox>

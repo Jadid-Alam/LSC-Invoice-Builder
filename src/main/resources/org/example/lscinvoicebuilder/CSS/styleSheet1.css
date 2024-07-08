@@ -1,0 +1,116 @@
+.vBox {
+    -fx-padding: 8px;
+    -fx-spacing: 0px;
+    -fx-alignment: TOP_LEFT;
+    -fx-background-color: #070742;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-width: 0px;
+    -fx-font-size: 13px;
+}
+
+.backHbox, .registryHbox, .titleHbox, .fnameHbox, .lnameHbox, .addHb,.buttonHb, .studentHBox {
+    -fx-padding: 7px;
+    -fx-spacing: 7px;
+    -fx-alignment: TOP_LEFT;
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-border-color: transparent #070742 transparent #070742;
+    -fx-border-width: 2px;
+}
+
+.parentDetailsHbox, .studentDetailsHb {
+    -fx-padding: 8px;
+    -fx-spacing: 8px;
+    -fx-alignment: BASELINE_CENTER;
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-border-color: transparent #070742 transparent #070742;
+    -fx-border-width: 2px;
+}
+
+.backButton {
+    -fx-alignment: BASELINE_LEFT;
+    -fx-pref-width: 50px;
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-border-color: #9e9e9e #9e9e9e #9e9e9e #9e9e9e;
+    -fx-border-width: 1px;
+    -fx-border-radius: 1px;
+}
+
+.registryLabel {
+    -fx-alignment: BASELINE_LEFT;
+    -fx-pref-width: 150px;
+    -fx-padding: 8px 0px 0px 0px;
+}
+
+.registryComboBox {
+    -fx-alignment: BASELINE_CENTER;
+    -fx-pref-width: 350px;
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-border-color: transparent transparent #9e9e9e transparent;
+    -fx-border-width: 1px;
+    -fx-border-radius: 1px;
+}
+
+.parentDetailsLabel, .studentDetailsLabel {
+    -fx-border-color: transparent transparent #070742 transparent;
+}
+
+.label {
+    -fx-alignment: BASELINE_LEFT;
+    -fx-pref-width: 150px;
+    -fx-padding: 8px 0px 0px 0px;
+}
+
+.textField {
+    -fx-alignment: BASELINE_RIGHT;
+    -fx-pref-width: 350px;
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-border-color: transparent transparent #9e9e9e transparent;
+    -fx-border-width: 1px;
+    -fx-border-radius: 1px;
+}
+
+.noStudLabel {
+    -fx-alignment: BASELINE_LEFT;
+    -fx-pref-width: 350px;
+    -fx-padding: 5px 0px 0px 0px;
+}
+
+.noStudSpinner {
+    -fx-alignment: BASELINE_RIGHT;
+    -fx-pref-width: 150px;
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-border-color: #9e9e9e #9e9e9e #9e9e9e #9e9e9e;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2px;
+}
+
+.label1 {
+    -fx-alignment: BASELINE_LEFT;
+    -fx-pref-width: 300px;
+    -fx-padding: 8px 0px 0px 0px;
+}
+
+.endDatePicker {
+    -fx-alignment: BASELINE_RIGHT;
+    -fx-pref-width: 200px;
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-border-color: #9e9e9e #9e9e9e #9e9e9e #9e9e9e;
+    -fx-border-width: 1px;
+    -fx-border-radius: 1px;
+}
+
+.buttonHb {
+    -fx-alignment: BASELINE_CENTER;
+}
+
+.saveButton {
+    -fx-alignment: BASELINE_CENTER;
+    -fx-pref-width: 150px;
+    -fx-background-color: #070742;
+    -fx-text-fill: white;
+    -fx-font-weight: BOLD;
+    -fx-font-size: 15px;
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-radius: 1px;
+}

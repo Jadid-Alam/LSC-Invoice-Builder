@@ -9,49 +9,77 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.collections.FXCollections?>
-<VBox alignment="CENTER" spacing="1.0" xmlns:fx="http://javafx.com/fxml">
+<VBox xmlns:fx="http://javafx.com/fxml" stylesheets="@CSS/styleSheet1.css" styleClass="vBox">
 
-    <Button text="Back" onAction="#handleBack"/>
+    <HBox alignment="BASELINE_LEFT" styleClass="backHbox">
+        <Button text="Back" onAction="#handleBack" styleClass="backButton"/>
+    </HBox>
 
-    <Label fx:id="registryLabel" text="Registry:"/>
-    <ComboBox fx:id="registryComboBox" promptText="Please Chose a Registry (Required)">
-        <items>
-            <FXCollections fx:factory="observableArrayList">
-                <String fx:value="EY557846"/>
-                <String fx:value="EY2649415"/>
-            </FXCollections>
-        </items>
-    </ComboBox>
+    <HBox styleClass="registryHbox">
+        <Label fx:id="registryLabel" text="Registry:" styleClass="registryLabel"/>
+        <ComboBox fx:id="registryComboBox" promptText="Please Chose a Registry (Required)" styleClass="registryComboBox">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="EY557846"/>
+                    <String fx:value="EY2649415"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+    </HBox>
+
+    <HBox styleClass="parentDetailsHbox">
+        <Label fx:id="parentDetails" text="Parent Details" styleClass="parentDetailsLabel"/>
+    </HBox>
+
+    <HBox styleClass="titleHbox">
+        <Label fx:id="title" text="Tile:" styleClass="label"/>
+        <TextField fx:id="titleTextField" promptText="Please enter a Tile (Required)" styleClass="textField"/>
+    </HBox>
 
 
-    <Label fx:id="parentDetails" text="Parent Details"/>
-    <Label fx:id="title" text="Tile:"/>
-    <TextField fx:id="titleTextField" promptText="Please enter a Tile (Required)"/>
+    <HBox styleClass="fnameHbox">
+        <Label fx:id="firstName" text="First Name:" styleClass="label"/>
+        <TextField fx:id="firstNameTextField" promptText="Please enter a First Name (Required)" styleClass="textField"/>
+    </HBox>
 
-    <Label fx:id="firstName" text="First Name:"/>
-    <TextField fx:id="firstNameTextField" promptText="Please enter a First Name (Required)"/>
+    <HBox styleClass="lnameHbox">
+        <Label fx:id="lastName" text="Last Name:" styleClass="label"/>
+        <TextField fx:id="lastNameTextField" promptText="Please enter a Last Name (Required)" styleClass="textField"/>
+    </HBox>
 
-    <Label fx:id="lastName" text="Last Name:"/>
-    <TextField fx:id="lastNameTextField" promptText="Please enter a Last Name (Required)"/>
+    <HBox styleClass="addHb">
+        <Label fx:id="address1" text="First Line fo Address:" styleClass="label"/>
+        <TextField fx:id="address1TextField" promptText="Please enter the First Line of Address (Required)" styleClass="textField"/>
+    </HBox>
 
-    <Label fx:id="address1" text="First Line fo Address:"/>
-    <TextField fx:id="address1TextField" promptText="Please enter the First Line of Address (Required)"/>
+    <HBox styleClass="addHb">
+        <Label fx:id="address2" text="Town:" styleClass="label"/>
+        <TextField fx:id="address2TextField" promptText="Please enter the Town (Optional)" styleClass="textField"/>
+    </HBox>
 
-    <Label fx:id="address2" text="Town:"/>
-    <TextField fx:id="address2TextField" promptText="Please enter the Town (Optional)"/>
+    <HBox styleClass="addHb">
+        <Label fx:id="address3" text="County:" styleClass="label"/>
+        <TextField fx:id="address3TextField" promptText="Please enter the County (Required)" styleClass="textField"/>
+    </HBox>
 
-    <Label fx:id="address3" text="County:"/>
-    <TextField fx:id="address3TextField" promptText="Please enter the County (Required)"/>
+    <HBox styleClass="addHb">
+        <Label fx:id="postcode" text="Postcode:" styleClass="label"/>
+        <TextField fx:id="postcodeTextField" promptText="Please enter the Postcode (Required)" styleClass="textField"/>
+    </HBox>
 
-    <Label fx:id="postcode" text="Postcode:"/>
-    <TextField fx:id="postcodeTextField" promptText="Please enter the Postcode (Required)"/>
+    <HBox styleClass="addHb">
+        <Label fx:id="noOfStudentsLabel" text="Number of Students (MAX: 4)" styleClass="noStudLabel"/>
+        <Spinner fx:id="noOfStudentsSpinner" styleClass="noStudSpinner"/>
+    </HBox>
 
-    <Label fx:id="noOfStudentsLabel" text="Number of Students (MAX: 4)"/>
-    <Spinner fx:id="noOfStudentsSpinner"/>
+    <HBox styleClass="studentDetailsHb">
+        <Label fx:id="studentDetails" text="Student Details" styleClass="studentDetailsLabel"/>
+    </HBox>
 
-    <Label fx:id="studentDetails" text="Student Details"/>
-    <VBox fx:id="studentDetailsContainer" spacing="5" alignment="CENTER"/>
+    <VBox fx:id="studentDetailsContainer"/>
 
-    <Button text="AddCustomer" onAction="#handleAddCustomer"/>
+    <HBox styleClass="buttonHb">
+        <Button text="Save" onAction="#handleAddCustomer" styleClass="saveButton"/>
+    </HBox>
 
 </VBox>

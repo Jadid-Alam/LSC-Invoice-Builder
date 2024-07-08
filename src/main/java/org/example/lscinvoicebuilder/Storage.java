@@ -132,8 +132,8 @@ public class Storage {
                     this.address3 = data[7];
                     this.postcode = data[8];
                     this.noOfChildren = Integer.parseInt(data[9]);
-                    this.studentNames = data[10].split(" ");
-                    this.studentDOB = data[11].split(" ");
+                    this.studentNames = data[10].split("_");
+                    this.studentDOB = data[11].split("_");
                     this.studentHPW = new double[this.noOfChildren];
                     this.studentPPW = new double[this.noOfChildren];
                     this.studentFPW = new double[this.noOfChildren];
@@ -160,8 +160,8 @@ public class Storage {
             String studentDOBstr = "";
 
             for (int i = 0; i < this.noOfChildren; i++) {
-                studentNamesstr += this.studentNames[i] + " ";
-                studentDOBstr += this.studentDOB[i] + " ";
+                studentNamesstr += this.studentNames[i] + "_";
+                studentDOBstr += this.studentDOB[i] + "_";
             }
 
             bw.write(this.id+","+this.registry+","+this.title+","+this.fName+","+this.lName+","+this.address1+","+this.address2+","+this.address3+","
@@ -187,7 +187,6 @@ public class Storage {
             String line;
             while ((line = br.readLine()) != null) {
                 this.dropdownOptions[count] = line;
-                System.out.println(this.dropdownOptions[count]);
                 count++;
             }
         } catch (IOException e) {
@@ -199,10 +198,6 @@ public class Storage {
     public int findID(String dropDownOption) {
 
         for (int i = 1; i <= this.dropdownOptions.length; i++) {
-            System.out.println(i);
-            System.out.println(dropDownOption);
-            System.out.println(this.dropdownOptions[i-1]);
-            System.out.println(this.dropdownOptions[i-1].contains(dropDownOption));
             if (this.dropdownOptions[i-1].contains(dropDownOption)) {
                 return i;
             }

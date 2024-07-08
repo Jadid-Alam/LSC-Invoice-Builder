@@ -3,6 +3,7 @@ package org.example.lscinvoicebuilder;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.w3c.dom.Text;
@@ -47,14 +48,27 @@ public class SecondController {
 
     @FXML
     private void handleBack() {
+        mainController.clearPaymentInformation();
         stage.setScene(this.scene1);
         stage.show();
+
+        registryComboBox.setValue(null);
+        titleTextField.clear();
+        firstNameTextField.clear();
+        lastNameTextField.clear();
+        address1TextField.clear();
+        address2TextField.clear();
+        address3TextField.clear();
+        postcodeTextField.clear();
+        noOfStudentsSpinner.getValueFactory().setValue(0);
+        studentDetailsContainer.getChildren().clear();
     }
 
     @FXML
     public void initialize() {
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4, 1);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4, 0);
         noOfStudentsSpinner.setValueFactory(valueFactory);
+        noOfStudentsSpinner.getStyleClass().add("noStudSpinner");
         noOfStudentsSpinner.valueProperty().addListener((obs, oldValue, newValue) -> {
             refreshStudentInputs();
         });
@@ -67,19 +81,34 @@ public class SecondController {
             Label label = new Label();
             label.setId("studentLabel" + i);
             label.setText("Student " + (i+1) + ":");
+            label.getStyleClass().add("label");
+
             TextField textField = new TextField();
             textField.setId("studentName" + i);
             textField.setPromptText("Please enter the student's name (Required)");
+            textField.getStyleClass().add("textField");
+
             Label label2 = new Label();
             label2.setId("studentDOBLabel" + i);
             label2.setText("Student " + (i+1) + "'s Date of Birth:");
+            label2.getStyleClass().add("label1");
+
             DatePicker datePicker = new DatePicker();
             datePicker.setId("studentDOB" + i);
+            datePicker.getStyleClass().add("datePicker");
 
-            studentDetailsContainer.getChildren().add(label);
-            studentDetailsContainer.getChildren().add(textField);
-            studentDetailsContainer.getChildren().add(label2);
-            studentDetailsContainer.getChildren().add(datePicker);
+            HBox h = new HBox();
+            h.getStyleClass().add("studentHBox");
+            h.getChildren().add(label);
+            h.getChildren().add(textField);
+
+            HBox h1 = new HBox();
+            h1.getStyleClass().add("studentHBox");
+            h1.getChildren().add(label2);
+            h1.getChildren().add(datePicker);
+
+            studentDetailsContainer.getChildren().add(h);
+            studentDetailsContainer.getChildren().add(h1);
         }
     }
 

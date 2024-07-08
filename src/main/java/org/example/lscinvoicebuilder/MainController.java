@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -46,11 +48,15 @@ public class MainController {
     @FXML
     private Label fileOutputLabel;
     @FXML
+    private Button fileOutputButton;
+    @FXML
     private Label startDateValidation;
     @FXML
     private Label endDateValidation;
     @FXML
     private VBox paymentInformation;
+    @FXML
+    private Button generateInvoiceButton;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -58,6 +64,10 @@ public class MainController {
     protected void handleAddCustomer() {
         stage.setScene(this.scene2);
         stage.show();
+
+        startDatePicker.setValue(null);
+        endDatePicker.setValue(null);
+        customerComboBox.setValue("");
     }
 
     @FXML
@@ -66,39 +76,29 @@ public class MainController {
             if (newValue != null) {
                 try {
                     String formattedDate = newValue.format(formatter);
-                    startDateValidation.setText("");
                 } catch (DateTimeParseException e) {
                     startDatePicker.setValue(oldValue);
-                    startDateValidation.setText("Invalid date format. Please select a valid date.");
                 }
-            } else {
-                startDateValidation.setText("No date selected!");
             }
         });
 
         endDatePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 try {
-                    endDateValidation.setText("");
+                    String formattedDate = newValue.format(formatter);
                 } catch (DateTimeParseException e) {
                     endDatePicker.setValue(oldValue);
-                    endDateValidation.setText("Invalid date format. Please select a valid date.");
                 }
-            } else {
-                endDateValidation.setText("No date selected!");
             }
         });
 
         customerComboBox.valueProperty().addListener((obserable, oldValue, newValue) -> {
-            System.out.println("Customer changed1");
             String customer = customerComboBox.getValue();
-            System.out.println(customer);
             int id = storage.findID(customer);
             if (id != -1) {
                 storage.setId(id);
                 storage.load(id);
                 refreshPaymentInformation();
-                System.out.println("Customer changed2");
             }
 
         });
@@ -130,22 +130,35 @@ public class MainController {
         paymentInformation.getChildren().clear();
         for (int i = 0; i < storage.getNoOfChildren(); i++) {
             Label l = new Label();
+            l.getStyleClass().add("paymentLabel");
             l.setId("weeklyFeeLabel"+i);
-            l.setText("Student " + (i + 1) + " Weekly Fee:");
+            l.setText(storage.getStudentName(i) + "'s Fees/Week:");
             TextField weeklyFee = new TextField();
+            weeklyFee.getStyleClass().add("paymentTextField");
             weeklyFee.setId("weeklyFee"+i);
-            weeklyFee.setPromptText("Please enter the weekly fee for student " + (i + 1) + "(Required)");
-            Label l2 = new Label();
-            l2.setId("hoursPerWeekLabel"+i);
-            l2.setText("Student " + (i + 1) + " Hours Per Week:");
-            TextField hoursPerWeek = new TextField();
-            hoursPerWeek.setId("hoursPerWeek"+i);
-            hoursPerWeek.setPromptText("Please enter the hours per week for student " + (i + 1) + "(Optional)");
+            weeklyFee.setPromptText("(Required)");
 
-            paymentInformation.getChildren().add(l);
-            paymentInformation.getChildren().add(weeklyFee);
-            paymentInformation.getChildren().add(l2);
-            paymentInformation.getChildren().add(hoursPerWeek);
+            Label l2 = new Label();
+            l2.getStyleClass().add("paymentLabel");
+            l2.setId("hoursPerWeekLabel"+i);
+            l2.setText(storage.getStudentName(i) + "'s Hours/Week:");
+            TextField hoursPerWeek = new TextField();
+            hoursPerWeek.getStyleClass().add("paymentTextField");
+            hoursPerWeek.setId("hoursPerWeek"+i);
+            hoursPerWeek.setPromptText("(Optional)");
+
+            HBox hBox = new HBox();
+            hBox.getStyleClass().add("paymentInformationHBox");
+            hBox.getChildren().add(l);
+            hBox.getChildren().add(weeklyFee);
+
+            HBox hBox1 = new HBox();
+            hBox1.getStyleClass().add("paymentInformationHBox");
+            hBox1.getChildren().add(l2);
+            hBox1.getChildren().add(hoursPerWeek);
+
+            paymentInformation.getChildren().add(hBox);
+            paymentInformation.getChildren().add(hBox1);
 
             weeklyFee.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("^\\$?\\d*(\\.\\d{0,2})?$")) {
@@ -159,6 +172,10 @@ public class MainController {
                 }
             });
         }
+    }
+
+    public void clearPaymentInformation() {
+        paymentInformation.getChildren().clear();
     }
 
 
@@ -256,8 +273,6 @@ public class MainController {
 
             PdfBuilder pdfBuilder = new PdfBuilder(storage);
             pdfBuilder.createPdf();
-
-            System.out.println(storage.getRegistry());
 
             File folder = new File(fileLocation);
             if (folder.exists() && folder.isDirectory()) {
