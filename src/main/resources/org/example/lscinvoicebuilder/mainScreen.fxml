@@ -40,6 +40,11 @@
       <Button text="Add a New Customer" onAction="#handleAddCustomer" styleClass="customerButton"/>
   </HBox>
 
+    <HBox styleClass="invoiceDateHbox">
+        <Label fx:id="invoiceDateLabel" text="Invoice Date:" styleClass="invoiceDateLabel"/>
+        <DatePicker fx:id="invoiceDatePicker" promptText="Enter Invoice Date or leave Blank for current date" styleClass="invoiceDatePicker"/>
+    </HBox>
+
   <HBox styleClass="datePickerHBox">
       <DatePicker fx:id="startDatePicker" promptText="Select a Start Date" styleClass="startDatePicker" />
       <Label fx:id="to" text="To" alignment="CENTER" styleClass="dateLabel" />

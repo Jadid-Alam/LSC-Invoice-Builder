@@ -57,6 +57,8 @@ public class MainController {
     private VBox paymentInformation;
     @FXML
     private Button generateInvoiceButton;
+    @FXML
+    private DatePicker invoiceDatePicker;
 
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -240,6 +242,11 @@ public class MainController {
         String customer = customerComboBox.getValue();
         if (storage.findID(customer) != -1)
         {
+            if (invoiceDatePicker.getValue() != null) {
+                storage.setInvoiceDate(invoiceDatePicker.getValue().format(formatter));
+            } else {
+                storage.setInvoiceDate(LocalDate.now().format(formatter));
+            }
             storage.setStartDate(startDatePicker.getValue().format(formatter));
             storage.setEndDate(endDatePicker.getValue().format(formatter));
             storage.setId(storage.findID(customer));

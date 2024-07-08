@@ -8,7 +8,7 @@
     -fx-font-size: 13px;
 }
 
-.customerHBox, .paymentInformationHBox, .datePickerHBox, .fileBrowserHBox, .generateInvoiceHBox, .logoHBox {
+.customerHBox, .paymentInformationHBox, .datePickerHBox, .fileBrowserHBox, .generateInvoiceHBox, .logoHBox, .invoiceDateHbox {
     -fx-padding: 10px;
     -fx-spacing: 10px;
     -fx-alignment: TOP_LEFT;
@@ -120,4 +120,20 @@
     -fx-border-color: #000000;
     -fx-border-width: 1px;
     -fx-border-radius: 1px;
+}
+
+.invoiceDateLabel {
+    -fx-alignment: BASELINE_LEFT;
+    -fx-pref-width: 130px;
+    -fx-padding: 8px 0px 0px 0px;
+}
+
+.invoiceDatePicker {
+    -fx-alignment: BASELINE_RIGHT;
+    -fx-pref-width: 370px;
+    -fx-background-color: rgba(255, 255, 255, 1);
+    -fx-border-color: #9e9e9e #9e9e9e #9e9e9e #9e9e9e;
+    -fx-border-width: 1px;
+    -fx-border-radius: 1px;
+    -fx-padding: 0;
 }

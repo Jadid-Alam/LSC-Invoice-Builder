@@ -52,10 +52,13 @@ public class PdfBuilder {
             document.add(logoImage);
 
             // date
+            /*
             LocalDate currentDate = LocalDate.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
             String formattedDate = currentDate.format(formatter);
-            Paragraph date = new Paragraph(formattedDate);
+            */
+
+            Paragraph date = new Paragraph(storage.getInvoiceDate());
             date.setAlignment(Element.ALIGN_RIGHT);
             date.setFont(normalFont);
             document.add(date);

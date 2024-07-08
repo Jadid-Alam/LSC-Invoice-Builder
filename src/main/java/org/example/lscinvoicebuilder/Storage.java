@@ -31,6 +31,9 @@ public class Storage {
     private Boolean isHoursThere;
     public Boolean getIsHoursThere() {return isHoursThere;}
     public void setIsHoursThere(Boolean isHoursThere1) {this.isHoursThere = isHoursThere1;}
+    private String invoiceDate;
+    public String getInvoiceDate() {return invoiceDate;}
+    public void setInvoiceDate(String invoiceDate1) {this.invoiceDate = invoiceDate1;}
 
     // registry data
     private String registry = "";
