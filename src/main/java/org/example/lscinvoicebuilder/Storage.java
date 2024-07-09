@@ -11,8 +11,16 @@ import java.io.*;
 public class Storage {
     // data for Storage
 
-    private final String FILENAME = "src/main/java/org/example/lscinvoicebuilder/SavedData/Database.csv";
-    private final String FILENAME_TOTAL_OBJECTS = "src/main/java/org/example/lscinvoicebuilder/SavedData/NumberOfData.txt";
+    private String FILENAME;
+    private String FILENAME_TOTAL_OBJECTS;
+    private String logoLocation;
+    public String getLogoLocation() {return logoLocation;}
+    private String signLocation;
+    public String getSignLocation() {return signLocation;}
+    private String normalFontLocation;
+    public String getNormalFontLocation() {return normalFontLocation;}
+    private String boldFontLocation;
+    public String getBoldFontLocation() {return boldFontLocation;}
     private int maxObjects;
     private String[] dropdownOptions;
     public String[] getDropdownOptions() {return dropdownOptions;}
@@ -101,6 +109,7 @@ public class Storage {
     public void setEndDate(String endDate1) {this.endDate = endDate1;}
 
     public Storage() {
+        saveFilePath();
         try (FileReader fr = new FileReader(FILENAME_TOTAL_OBJECTS);
              BufferedReader br = new BufferedReader(fr)) {
             int count = 0;
@@ -221,6 +230,34 @@ public class Storage {
             return userHome + "/Downloads";
         } else {
             return userHome;
+        }
+    }
+
+    private void saveFilePath() {
+        String os = System.getProperty("os.name").toLowerCase();
+        String userHome = System.getProperty("user.home");
+
+        if (os.contains("win")) {
+            this.FILENAME = userHome + "\\Documents\\LSC Invoice Builder\\SavedData\\Database.csv";
+            this.FILENAME_TOTAL_OBJECTS = userHome + "\\Documents\\LSC Invoice Builder\\SavedData\\NumberOfData.txt";
+            this.logoLocation = userHome + "\\Documents\\LSC Invoice Builder\\images\\invoice-logo.jpg";
+            this.signLocation = userHome + "\\Documents\\LSC Invoice Builder\\images\\invoice-sign.png";
+            this.normalFontLocation = userHome + "\\Documents\\LSC Invoice Builder\\font\\Helvetica.ttf";
+            this.boldFontLocation = userHome + "\\Documents\\LSC Invoice Builder\\font\\Helvetica-Bold.ttf";
+        } else if (os.contains("mac")) {
+            this.FILENAME = userHome + "/Documents/LSC Invoice Builder/SavedData/Database.csv";
+            this.FILENAME_TOTAL_OBJECTS = userHome + "/Documents/LSC Invoice Builder/SavedData/NumberOfData.txt";
+            this.logoLocation = userHome + "/Documents/LSC Invoice Builder/images/invoice-logo.jpg";
+            this.signLocation = userHome + "/Documents/LSC Invoice Builder/images/invoice-sign.png";
+            this.normalFontLocation = userHome + "/Documents/LSC Invoice Builder/font/Helvetica.ttf";
+            this.boldFontLocation = userHome + "/Documents/LSC Invoice Builder/font/Helvetica-Bold.ttf";
+        } else if (os.contains("nix") || os.contains("nux") || os.contains("aix")) {
+            this.FILENAME = userHome + "/Documents/LSC Invoice Builder/SavedData/Database.csv";
+            this.FILENAME_TOTAL_OBJECTS = userHome + "/Documents/LSC Invoice Builder/SavedData/NumberOfData.txt";
+            this.logoLocation = userHome + "/Documents/LSC Invoice Builder/images/invoice-logo.jpg";
+            this.signLocation = userHome + "/Documents/LSC Invoice Builder/images/invoice-sign.png";
+            this.normalFontLocation = userHome + "/Documents/LSC Invoice Builder/font/Helvetica.ttf";
+            this.boldFontLocation = userHome + "/Documents/LSC Invoice Builder/font/Helvetica-Bold.ttf";
         }
     }
 

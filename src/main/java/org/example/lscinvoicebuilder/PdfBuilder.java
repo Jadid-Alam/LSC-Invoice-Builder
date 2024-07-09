@@ -33,8 +33,17 @@ public class PdfBuilder {
         Document document = new Document(PageSize.A4, 60,60,15,0);
 
         // font of the whole file
-        Font normalFont = new Font(Font.FontFamily.HELVETICA, 11, Font.NORMAL, BaseColor.BLACK);
-        Font boldFont = new Font(Font.FontFamily.HELVETICA, 11, Font.BOLD, BaseColor.BLACK);
+        BaseFont baseFont = null;
+        BaseFont boldBaseFont = null;
+        try {
+            baseFont = BaseFont.createFont(storage.getNormalFontLocation(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            boldBaseFont = BaseFont.createFont(storage.getBoldFontLocation(), BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        } catch (DocumentException | IOException e) {
+            e.printStackTrace();
+        }
+
+        Font normalFont = new Font(baseFont, 11);
+        Font boldFont = new Font(boldBaseFont, 11);
 
         try {
             // name of the file
@@ -47,17 +56,11 @@ public class PdfBuilder {
             document.add(registry);
 
             // lsc Logo
-            Image logoImage = Image.getInstance("src/main/java/org/example/lscinvoicebuilder/images/invoice-logo.jpg");
+            Image logoImage = Image.getInstance(storage.getLogoLocation());
             logoImage.scaleToFit(144, 51); // Adjust the size of the image
             document.add(logoImage);
 
             // date
-            /*
-            LocalDate currentDate = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-            String formattedDate = currentDate.format(formatter);
-            */
-
             Paragraph date = new Paragraph(storage.getInvoiceDate());
             date.setAlignment(Element.ALIGN_RIGHT);
             date.setFont(normalFont);
@@ -214,7 +217,7 @@ public class PdfBuilder {
             document.add(new Paragraph("\nThank you.\nYours Sincerely, \n", normalFont));
 
             // signature image
-            Image signatureImage = Image.getInstance("src/main/java/org/example/lscinvoicebuilder/images/invoice-sign.png");
+            Image signatureImage = Image.getInstance(storage.getSignLocation());
             signatureImage.scaleToFit(115, 60); // Adjust the size of the image
             document.add(signatureImage);
 
