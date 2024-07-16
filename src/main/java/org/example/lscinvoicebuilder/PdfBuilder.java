@@ -12,7 +12,6 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.*;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.io.FileOutputStream;
@@ -100,7 +99,7 @@ public class PdfBuilder {
             feesPerWeek.setPadding(tablePadding);
 
             if (storage.getIsHoursThere()) {
-                PdfPCell hoursPerWeek = new PdfPCell(new Phrase("HoursPerWeek", boldFont));
+                PdfPCell hoursPerWeek = new PdfPCell(new Phrase("Hours/Week", boldFont));
                 hoursPerWeek.setPadding(tablePadding);
                 PdfPCell pricePerHour = new PdfPCell(new Phrase("Price/Hour", boldFont));
                 pricePerHour.setPadding(tablePadding);

@@ -1,13 +1,8 @@
 package org.example.lscinvoicebuilder;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -18,8 +13,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
-import java.util.Objects;
 import java.awt.Desktop;
 
 public class MainController {
@@ -242,6 +235,13 @@ public class MainController {
         String customer = customerComboBox.getValue();
         if (storage.findID(customer) != -1)
         {
+
+            // -------------------------------------------------------------------------
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Debug Dialog");
+            alert1.setContentText("REACHED 1");
+            alert1.showAndWait();
+
             if (invoiceDatePicker.getValue() != null) {
                 storage.setInvoiceDate(invoiceDatePicker.getValue().format(formatter));
             } else {
@@ -252,6 +252,11 @@ public class MainController {
             storage.setId(storage.findID(customer));
             storage.load(storage.findID(customer));
             determineFileName();
+
+            // ---------------------------------------------------------------------------
+            alert1.setTitle("Debug Dialog");
+            alert1.setContentText("REACHED 2");
+            alert1.showAndWait();
 
             boolean isHrThere = false;
             for (int i = 0; i < storage.getNoOfChildren(); i++) {
@@ -278,14 +283,51 @@ public class MainController {
             }
             storage.setIsHoursThere(isHrThere);
 
+            // ---------------------------------------------------------------------------
+            alert1.setTitle("Debug Dialog");
+            alert1.setContentText("REACHED before pdfBuilder");
+            alert1.showAndWait();
+
             PdfBuilder pdfBuilder = new PdfBuilder(storage);
+
+            // ---------------------------------------------------------------------------
+            alert1.setTitle("Debug Dialog");
+            alert1.setContentText("REACHED after pdfBuilder");
+            alert1.showAndWait();
+
             pdfBuilder.createPdf();
+
+            // ---------------------------------------------------------------------------
+            alert1.setTitle("Debug Dialog");
+            alert1.setContentText("REACHED after createPdf");
+            alert1.showAndWait();
+
+            // ---------------------------------------------------------------------------
+            alert1.setTitle("Debug Dialog");
+            alert1.setContentText("Attempting to open folder");
+            alert1.showAndWait();
 
             File folder = new File(fileLocation);
             if (folder.exists() && folder.isDirectory()) {
+
+                // ---------------------------------------------------------------------------
+                alert1.setTitle("Debug Dialog");
+                alert1.setContentText("folder exists");
+                alert1.showAndWait();
+
                 if (Desktop.isDesktopSupported()) {
+
+                    alert1.setTitle("Debug Dialog");
+                    alert1.setContentText("descktop supported");
+                    alert1.showAndWait();
+
                     Desktop desktop = Desktop.getDesktop();
                     try {
+
+                        alert1.setTitle("Debug Dialog");
+                        alert1.setContentText("open folder");
+                        alert1.showAndWait();
+
                         desktop.open(folder);
                         System.out.println("Folder opened: " + fileLocation);
                     } catch (IOException e) {

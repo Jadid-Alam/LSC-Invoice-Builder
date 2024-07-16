@@ -182,9 +182,9 @@ public class Storage {
             e.printStackTrace();
         }
 
-        try (FileWriter fw = new FileWriter(FILENAME_TOTAL_OBJECTS,true);
-             BufferedWriter bw = new BufferedWriter(fw)) {
-            bw.write("ID: " + this.id + " " + this.title + " " + this.fName + " " + this.lName + "\n");
+        try (FileWriter fw1 = new FileWriter(FILENAME_TOTAL_OBJECTS,true);
+             BufferedWriter bw1 = new BufferedWriter(fw1)) {
+            bw1.write("ID: " + this.id + " " + this.title + " " + this.fName + " " + this.lName + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
